@@ -92,12 +92,9 @@ impl KZG {
             ));
         }
 
-        println!("before ifft");
         // When the polynomial is in evaluation form, use IFFT to transform monomial srs
         // points to lagrange form.
         let bases = self.g1_ifft(polynomial.len(), srs)?;
-
-        println!("after ifft");
 
         match G1Projective::msm(&bases, polynomial.evaluations()) {
             Ok(res) => Ok(res.into_affine()),
@@ -263,7 +260,6 @@ impl KZG {
 
     /// function to compute the inverse FFT
     pub fn g1_ifft(&self, length: usize, srs: &SRS) -> Result<Vec<G1Affine>, KzgError> {
-        println!("inside ifft");
         // is not power of 2
         if !length.is_power_of_two() {
             return Err(KzgError::FFTError(
@@ -271,14 +267,11 @@ impl KZG {
             ));
         }
 
-        println!("ifft 1");
-
         let points_projective: Vec<G1Projective> = srs.g1[..length]
             .iter()
             .map(|&p| G1Projective::from(p))
             .collect();
 
-        println!("ifft 2");
         let ifft_result: Vec<_> = GeneralEvaluationDomain::<Fr>::new(length)
             .ok_or(KzgError::FFTError(
                 "Could not perform IFFT due to domain consturction error".to_string(),
@@ -287,8 +280,6 @@ impl KZG {
             .iter()
             .map(|p| p.into_affine())
             .collect();
-
-        println!("ifft 3");
 
         Ok(ifft_result)
     }
