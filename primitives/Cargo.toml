@@ -6,6 +6,10 @@ edition.workspace = true
 repository.workspace = true
 license-file.workspace = true
 
+[features]
+parallel = ["ark-ec/parallel","ark-ff/parallel","ark-std/parallel","ark-poly/parallel"]
+default = ["parallel"]
+
 [dependencies]
 ark-bn254 = "0.5.0"
 ark-ec = { version = "0.5.0" }

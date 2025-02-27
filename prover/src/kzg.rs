@@ -3,7 +3,7 @@ use ark_ec::{CurveGroup, VariableBaseMSM};
 use ark_poly::{EvaluationDomain, GeneralEvaluationDomain};
 use ark_std::{ops::Div, Zero};
 use num_traits::ToPrimitive;
-#[cfg(not(feature = "non-parallel"))]
+#[cfg(feature = "parallel")]
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 use rust_kzg_bn254_primitives::{
     blob::Blob,
@@ -268,9 +268,9 @@ impl KZG {
             ));
         }
 
-        #[cfg(feature = "non-parallel")]
+        #[cfg(not(feature = "parallel"))]
         let points_iterator = srs.g1[..length].iter();
-        #[cfg(not(feature = "non-parallel"))]
+        #[cfg(feature = "parallel")]
         let points_iterator = srs.g1[..length].par_iter();
 
         let points_projective: Vec<G1Projective> =
@@ -282,9 +282,9 @@ impl KZG {
             ))?
             .ifft(&points_projective);
 
-        #[cfg(feature = "non-parallel")]
+        #[cfg(not(feature = "parallel"))]
         let iift_iter = ifft.iter();
-        #[cfg(not(feature = "non-parallel"))]
+        #[cfg(feature = "parallel")]
         let iift_iter = ifft.par_iter();
 
         let ifft_result: Vec<_> = iift_iter.map(|p| p.into_affine()).collect();
