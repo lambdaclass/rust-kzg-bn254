@@ -10,8 +10,8 @@ license-file.workspace = true
 exclude = ["tests/*", "benches/*"]
 
 [features]
-non-parallel = []
-default = ["ark-ec/parallel","ark-ff/parallel","ark-std/parallel","ark-poly/parallel"]
+non-parallel = ["rust-kzg-bn254-primitives/non-parallel"]
+default = ["ark-ec/parallel","ark-ff/parallel","ark-std/parallel","ark-poly/parallel", "rust-kzg-bn254-primitives/default"]
 
 [dependencies]
 rust-kzg-bn254-primitives = { version = "0.1.1", path = "../primitives" }
