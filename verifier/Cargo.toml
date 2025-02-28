@@ -7,10 +7,6 @@ edition.workspace = true
 rust-version.workspace = true
 repository.workspace = true
 
-[features]
-parallel = ["ark-ec/parallel","ark-ff/parallel"]
-default = ["parallel"]
-
 [dependencies]
 rust-kzg-bn254-primitives = {version = "0.1.1", path = "../primitives" }
 ark-bn254 = "0.5.0"
