@@ -9,7 +9,7 @@ repository.workspace = true
 
 [features]
 non-parallel = []
-default = ["ark-ec/parallel","ark-ff/parallel","ark-std/parallel","ark-poly/parallel"]
+default = ["ark-ec/parallel","ark-ff/parallel"]
 
 [dependencies]
 rust-kzg-bn254-primitives = {version = "0.1.1", path = "../primitives" }
